@@ -112,7 +112,7 @@ def test_one_candidate_per_pair_per_week_with_absolute_stop():
 
 @pytest.mark.parametrize("bull,anchor,pair", [(0, 95, "BTC/USDT:USDT"),
                                              (1, 99, "BTC/USDT:USDT"),
-                                             (1, 95, "SOL/USDT:USDT"),
+                                             (1, 95, "ADA/USDT:USDT"),
                                              (1, 95, "BTC/USDC:USDC"),
                                              (1, 95, "BTC/USDT")])
 def test_no_permission_without_daily_structure_or_allowed_pair(bull, anchor, pair):
@@ -201,3 +201,80 @@ def test_no_framework_risk_callbacks_overridden():
     assert strategy().framework_params == {}
     assert strategy().take_profit_legs(None) == []
     assert set(strategy().research_stress) == {"cost2x", "delay1", "stopslip"}
+
+
+# v2: explicit bearish fixtures, entry policy, plan contract and causality.
+def _v2_bearish_source():
+    raw = hourly().copy()
+    original = raw.copy()
+    raw["open"], raw["close"] = 200 - original["open"], 200 - original["close"]
+    raw["high"], raw["low"] = 200 - original["low"], 200 - original["high"]
+    return raw
+
+
+def _v2_signals(raw, mode="both", pairs=None, pair="BTC/USDT:USDT"):
+    s = TraderMayneWeeklyHL.__new__(TraderMayneWeeklyHL)
+    s.config = {"fw_trade_direction": mode}
+    if pairs is not None:
+        s.config["exchange"] = {"pair_whitelist": pairs}
+    df = s.populate_indicators(raw, {})
+    df["trend_ok_1d"], df["trend_short_1d"] = 0, 1
+    df["bull_structure_1d"], df["last_low_1d"] = 0, 95.0
+    df["bear_structure_1d"], df["last_high_1d"] = 1, 105.0
+    return s.populate_entry_trend(df, {"pair": pair})
+
+
+def test_v2_actual_bearish_pattern_and_plan():
+    from framework_base import decode_plan
+    raw = _v2_bearish_source()
+    out = _v2_signals(raw)
+    hits = out.loc[out.enter_short.eq(1)]
+    assert len(hits) > 0
+    assert (hits.fw_stop > hits.close).all() and (hits.fw_entry_cap < hits.close).all()
+    assert out.enter_long.sum() == 0
+    s = TraderMayneWeeklyHL.__new__(TraderMayneWeeklyHL)
+    planned = s.advise_entry(s.populate_indicators(raw, {}).assign(
+        trend_ok_1d=0, trend_short_1d=1, bull_structure_1d=0,
+        last_low_1d=95., bear_structure_1d=1, last_high_1d=105.), {"pair":"BTC/USDT:USDT"})
+    for _, row in planned.loc[planned.enter_short.eq(1)].iterrows():
+        plan = decode_plan(row.enter_tag)
+        assert plan["side"] == "short" and plan["stop"] > row.close and plan["cap"] < row.close
+
+
+@pytest.mark.parametrize("coin", ["BTC", "ETH", "SOL", "BNB", "HYPE"])
+def test_v2_five_default_pairs_and_direction_switch(coin):
+    raw = _v2_bearish_source()
+    pair = coin + "/USDT:USDT"
+    assert _v2_signals(raw, pair=pair).enter_short.sum() > 0
+    assert _v2_signals(raw, mode="short", pair=pair).enter_short.sum() > 0
+    assert _v2_signals(raw, mode="long", pair=pair).enter_short.sum() == 0
+    assert _v2_signals(raw, pairs=[], pair=pair).enter_short.sum() == 0
+
+
+def test_v2_add_remove_pair_and_zero_volume():
+    raw = _v2_bearish_source()
+    pair = "ADA/USDT:USDT"
+    assert _v2_signals(raw, pair=pair).enter_short.sum() == 0
+    assert _v2_signals(raw, pairs=[pair], pair=pair).enter_short.sum() > 0
+    raw["volume"] = 0.
+    assert _v2_signals(raw).enter_short.sum() == 0
+
+
+def test_v2_bearish_prefix_and_future_stability():
+    raw = _v2_bearish_source()
+    full = _v2_signals(raw)
+    for n in (3, len(raw)//2, len(raw)-2, len(raw)-1, len(raw)):
+        assert_frame_equal(_v2_signals(raw.iloc[:n]), full.iloc[:n])
+    cut = len(raw)//2
+    changed = raw.copy()
+    changed.loc[changed.index[cut:], ["high", "low", "close"]] = [190, 10, 150]
+    assert_frame_equal(_v2_signals(changed).iloc[:cut], full.iloc[:cut])
+
+
+def test_v2_short_exit_is_directional():
+    from types import SimpleNamespace
+    s = TraderMayneWeeklyHL.__new__(TraderMayneWeeklyHL)
+    now = pd.Timestamp("2026-06-01 16:00Z")
+    t = SimpleNamespace(open_rate=100., is_short=True, get_custom_data=lambda key:102., open_date_utc=now)
+    assert s.strategy_exit("BTC",t,now,100.-s.target_r*2.+.001,None) is None
+    assert s.strategy_exit("BTC",t,now,100.-s.target_r*2.,None) is not None

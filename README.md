@@ -2,7 +2,7 @@
 
 为 [freq-trader-framework](https://github.com/lepockyio-ops/freq-trader-framework) 编写的 **11 位交易员研究策略包**。每位独立一包，包含研究报告、明确规格、可运行插件、测试与验证记录。所有实现均为研究代理，不能称为交易员授权原版，也不代表经过收益验证。
 
-框架兼容基线：`3fe6153ccec5eb0598ce3dbf2e38ea0bc79ce90c`；Freqtrade `2026.9`。只生成 BTC/USDT:USDT、ETH/USDT:USDT 多头候选。包不包含框架风控代码或交易配置，须安装到单独的目标框架研究副本。
+v2 框架兼容基线：`e79e10fe4cf05b6546725ea3e5709852cffe24b0`；Freqtrade `2026.10`、Python `>=3.12`。默认 BTC、ETH、SOL、BNB、HYPE USDT 永续；用户可增删币种，并选择 `both / long / short`。设置方法见 [币种与多空配置](docs/CONFIGURATION.md)。旧 `3fe6153…` 是 v1 的框架 Git 提交编号，不是 Freqtrade 版本。包不包含框架风控代码或交易配置，须安装到单独的目标框架研究副本。
 
 ## 策略索引
 
@@ -28,7 +28,7 @@
 
 ```bash
 git clone https://github.com/lepockyio-ops/freq-trader-framework.git ../freq-trader-framework
-git -C ../freq-trader-framework checkout 3fe6153ccec5eb0598ce3dbf2e38ea0bc79ce90c
+git -C ../freq-trader-framework checkout e79e10fe4cf05b6546725ea3e5709852cffe24b0
 export FT_FRAMEWORK_ROOT="$(cd ../freq-trader-framework && pwd)"
 # 在框架虚拟环境中，或用该虚拟环境的 Python 执行以下命令。
 python tools/packs.py list
@@ -61,4 +61,10 @@ pytest -q
 
 根目录测试需要目标框架真实 `framework_base.py`，不会用假类替代。跨包测试结果见 [验证总览](docs/VALIDATION_SUMMARY.md)。单元测试及因果检查不能替代真实成交、成本后收益、G0–G9 和人工审阅。
 
-本次不复制原框架源码、不改变其风险约束，不运行实盘命令。每个插件的数值起点均为示例，尚未经过市场统计验证；不能根据交易员声望推断该代理有正期望。
+本库不复制原框架源码；v2 须先使用已升级的双向风险基类，风险阈值未放宽，不运行实盘命令。每个插件的数值起点均为示例，尚未经过市场统计验证；不能根据交易员声望推断该代理有正期望。
+
+## v2 升级说明
+
+11 包均新增明确空头规则与方向化退出；原多头规则保留。新增空头属于研究扩展，未经市场验证，不代表交易员本人公开的完整空头系统。新版安装器仍检查框架校验和并拒绝覆盖不同文件。下载 `dist/*-v2.zip`；v1 记录仅保留在 Git 历史及各包历史说明中。框架升级 PR 的提交可直接检出测试，无需启动任何交易。
+
+框架升级与执行加固：[PR #1](https://github.com/lepockyio-ops/freq-trader-framework/pull/1)。安装时检出上述提交，不依赖PR是否已合并。方向字段为框架现有的 `fw_trade_direction` 与 `fw_pair_directions`。

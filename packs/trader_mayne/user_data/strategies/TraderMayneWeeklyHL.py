@@ -1,4 +1,4 @@
-"""Mayne-inspired research proxy, not his disclosed system. Spec: docs/TRADER_MAYNE_STRATEGY.md.
+"""Mayne-inspired research proxy, not his disclosed system. Spec: the pack docs/STRATEGY.md.
 
 All strategy numbers below are unvalidated examples. Execution and risk callbacks belong
 to FrameworkStrategy. No future pivots, final-week lows, or discretionary trade overrides.
@@ -14,7 +14,7 @@ from pandas import DataFrame
 from freqtrade.strategy import informative
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from framework_base import FrameworkStrategy  # noqa: E402
+from framework_base import FrameworkStrategy, target_reached  # noqa: E402
 
 
 def confirmed_structure(dataframe: DataFrame, radius: int = 2) -> DataFrame:
@@ -36,12 +36,16 @@ def confirmed_structure(dataframe: DataFrame, radius: int = 2) -> DataFrame:
         & (df["last_low"] > df["previous_low"])
         & (df["close"] > df["last_low"])
     ).astype(int)
+    df["bear_structure"] = ((df["last_high"] < df["previous_high"])
+                            & (df["last_low"] < df["previous_low"])
+                            & (df["close"] < df["last_high"])).astype(int)
     return df
 
 
 class TraderMayneWeeklyHL(FrameworkStrategy):
     timeframe = "1h"
     startup_candle_count = 240
+    can_short = True
     framework_params = {}  # Deliberately inherit all framework risk/venue settings.
     pivot_radius = 2
     recovery_hours = 6
@@ -65,15 +69,18 @@ class TraderMayneWeeklyHL(FrameworkStrategy):
         close_dates = dates + pd.Timedelta(hours=1)
         df["early_week"] = (dates.dt.dayofweek <= 2) & (close_dates.dt.dayofweek <= 2)
         df["recovery_high"] = df["high"].shift(1).rolling(self.recovery_hours).max()
+        df["week_high"] = df["high"].groupby(week).cummax()
+        df["recovery_low"] = df["low"].shift(1).rolling(self.recovery_hours).min()
         return df
 
     def populate_entry_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         df = dataframe.copy()
+        df["enter_short"] = 0
         df["enter_long"] = 0
         df["enter_tag"] = ""
         df["fw_stop"] = float("nan")
         df["fw_entry_cap"] = float("nan")
-        if metadata.get("pair") not in {"BTC/USDT:USDT", "ETH/USDT:USDT"}:
+        if not self.pair_enabled(metadata.get("pair")):
             return df
         if not {"bull_structure_1d", "last_low_1d"}.issubset(df.columns):
             return df  # Missing higher-timeframe data must not turn into permission.
@@ -92,16 +99,23 @@ class TraderMayneWeeklyHL(FrameworkStrategy):
         df.loc[first, "enter_tag"] = "mayne_weekly_hl_v1"
         df.loc[first, "fw_stop"] = df.loc[first, "week_low"] * (1 - self.stop_buffer)
         df.loc[first, "fw_entry_cap"] = df.loc[first, "close"] * (1 + self.entry_cap_buffer)
-        return df
+        if {"bear_structure_1d", "last_high_1d"}.issubset(df.columns):
+            breakdown = ((df["close"] < df["recovery_low"])
+                         & (df["close"].shift(1) >= df["recovery_low"].shift(1)))
+            short_candidate = (df["full_week_start"] & df["early_week"] & df["bear_structure_1d"].eq(1)
+                               & (df["week_high"] < df["last_high_1d"])
+                               & (df["week_high"] > df["week_open"])
+                               & breakdown & (df["close"] < df["open"]) & (df["volume"] > 0)).fillna(False)
+            first_short = short_candidate & short_candidate.groupby(df["mayne_week"]).cumsum().eq(1)
+            df.loc[first_short, "enter_short"] = 1
+            df.loc[first_short, "enter_tag"] = "mayne_weekly_lh_v2"
+            df.loc[first_short, "fw_stop"] = df.loc[first_short, "week_high"] * (1 + self.stop_buffer)
+            df.loc[first_short, "fw_entry_cap"] = df.loc[first_short, "close"] * (1 - self.entry_cap_buffer)
+        return self.filter_entry_signals(df, metadata)
 
     def populate_exit_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
-        dataframe["exit_long"] = 0
+        dataframe["exit_long"], dataframe["exit_short"] = 0, 0
         return dataframe
 
     def strategy_exit(self, pair, trade, current_time, current_rate, last_row):
-        # The parent binds and validates this stop before calling the hook.
-        stop = trade.get_custom_data("stop_px")
-        if stop is None or not math.isfinite(float(stop)) or trade.open_rate <= float(stop):
-            return None
-        target = trade.open_rate + self.target_r * (trade.open_rate - float(stop))
-        return "mayne_2R" if current_rate >= target else None
+        return "mayne_2R" if target_reached(trade, current_rate, self.target_r) else None

@@ -71,7 +71,7 @@ def test_archive_is_reproducible_and_complete(tmp_path, monkeypatch):
     first = tools.build("example", tmp_path / "dist")
     second = tools.build("example", tmp_path / "dist")
     assert first == second
-    with zipfile.ZipFile(tmp_path / "dist/example-v1.zip") as archive:
+    with zipfile.ZipFile(tmp_path / "dist/example-v2.zip") as archive:
         assert len(archive.namelist()) == 8
         assert archive.testzip() is None
 

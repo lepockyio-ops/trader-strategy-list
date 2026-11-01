@@ -56,5 +56,9 @@ def test_real_analysis_and_plan_contract(item):
     for name in ("custom_stake_amount", "custom_stoploss", "confirm_trade_entry", "leverage",
                  "order_filled", "custom_exit", "adjust_trade_position", "advise_entry", "bot_loop_start"):
         assert getattr(cls, name) is getattr(FrameworkStrategy, name)
-    assert strategy.can_short is False and strategy.framework_params == {}
+    assert result["enter_short"].fillna(0).isin([0, 1]).all()
+    for _, row in result[result.enter_short.eq(1)].iterrows():
+        plan = decode_plan(row.enter_tag)
+        assert plan is not None and plan["side"] == "short" and plan["stop"] > row.close
+    assert strategy.can_short is True and strategy.framework_params == {}
     assert set(strategy.research_stress) == {"cost2x", "delay1", "stopslip"}

@@ -1,3 +1,7 @@
+# v2 测试与安装（2026-11-01）
+
+必须使用新版双向框架（manifest.json 的 commit 与基类校验和），Freqtrade 2026.10、Python >=3.12。旧3fe6153框架不能执行此版。先安装/检出框架升级，再复制插件；安装器不替换框架基类、不启用交易。空头与新增币种尚未市场验证。配置细节见仓库 docs/CONFIGURATION.md，独立ZIP使用 STRATEGY.md 顶部 v2 规则。
+
 # PeterBrandtRectangle 安装与测试
 
 先读 [研究规格](STRATEGY.md)。本版是日线水平矩形代理，不是所有经典图形；不缩短六周形成期去提高频率。
@@ -10,7 +14,7 @@ export FT_FRAMEWORK_ROOT=<framework>
 python -m pytest packs/peter_brandt/tests -q
 ```
 
-也可手动复制 `user_data/strategies/PeterBrandtRectangle.py`，不要覆盖 framework_base.py 或交易配置。目标为独立研究副本和 Freqtrade 2026.9。
+也可手动复制 `user_data/strategies/PeterBrandtRectangle.py`，不要覆盖 framework_base.py 或交易配置。目标为独立研究副本和 Freqtrade 2026.10。
 
 目标框架中的研究选择：
 

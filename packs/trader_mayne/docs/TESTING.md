@@ -1,3 +1,7 @@
+# v2 测试与安装（2026-11-01）
+
+必须使用新版双向框架（manifest.json 的 commit 与基类校验和），Freqtrade 2026.10、Python >=3.12。旧3fe6153框架不能执行此版。先安装/检出框架升级，再复制插件；安装器不替换框架基类、不启用交易。空头与新增币种尚未市场验证。配置细节见仓库 docs/CONFIGURATION.md，独立ZIP使用 STRATEGY.md 顶部 v2 规则。
+
 # Trader Mayne 插件：安装与测试
 
 这是研究插件，不是已验证策略。先读 [完整规格](STRATEGY.md) 与仓库 AGENTS.md。基线为 `3fe6153ccec5eb0598ce3dbf2e38ea0bc79ce90c`；交付不修改任何交易配置或框架风控。不运行实盘命令。

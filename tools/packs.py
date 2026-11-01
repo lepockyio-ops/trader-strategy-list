@@ -77,7 +77,7 @@ def build(slug: str, output: Path) -> dict:
     base = ROOT / "packs" / slug
     files = pack_files(item)
     output.mkdir(parents=True, exist_ok=True)
-    target = output / (slug + "-v1.zip")
+    target = output / (slug + "-" + manifest().get("archive_version", "v2") + ".zip")
     payload = {path.relative_to(base).as_posix(): path.read_bytes() for path in files}
     payload["PACK.json"] = (json.dumps({"pack": item, "framework": manifest()["framework"]},
                                       ensure_ascii=False, indent=2) + "\n").encode("utf-8")

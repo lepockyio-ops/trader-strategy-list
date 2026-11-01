@@ -1,3 +1,7 @@
+# v2 测试与安装（2026-11-01）
+
+必须使用新版双向框架（manifest.json 的 commit 与基类校验和），Freqtrade 2026.10、Python >=3.12。旧3fe6153框架不能执行此版。先安装/检出框架升级，再复制插件；安装器不替换框架基类、不启用交易。空头与新增币种尚未市场验证。配置细节见仓库 docs/CONFIGURATION.md，独立ZIP使用 STRATEGY.md 顶部 v2 规则。
+
 # BrianShannonAVWAP 安装与测试
 
 先阅读 [研究规格](STRATEGY.md) 与 [原研究](RESEARCH.md)。本包只提供一个常规确认入场的 OHLCV 代理，不含接急跌例外及原版移动止损。
@@ -10,7 +14,7 @@
 python tools/packs.py install --pack brian_shannon --framework <framework>
 ```
 
-安装器不应覆盖框架配置和想法登记簿。也可只把 `user_data/strategies/BrianShannonAVWAP.py` 复制到目标框架同名目录，保留原 framework_base.py。框架固定版本为 Freqtrade 2026.9。
+安装器不应覆盖框架配置和想法登记簿。也可只把 `user_data/strategies/BrianShannonAVWAP.py` 复制到目标框架同名目录，保留原 framework_base.py。框架固定版本为 Freqtrade 2026.10。
 
 在策略包仓库运行专用测试，使用已装真实框架依赖的解释器：
 

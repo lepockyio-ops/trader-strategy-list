@@ -1,6 +1,10 @@
+# v2 测试与安装（2026-11-01）
+
+必须使用新版双向框架（manifest.json 的 commit 与基类校验和），Freqtrade 2026.10、Python >=3.12。旧3fe6153框架不能执行此版。先安装/检出框架升级，再复制插件；安装器不替换框架基类、不启用交易。空头与新增币种尚未市场验证。配置细节见仓库 docs/CONFIGURATION.md，独立ZIP使用 STRATEGY.md 顶部 v2 规则。
+
 # PradeepBondeBurst：接入与测试步骤
 
-先读STRATEGY.md与RESEARCH.md；本插件是研究代理。实际idea id必须在目标登记簿生成；没有已注册的默认id，不覆盖research/ideas.jsonl。原框架支持Linux/macOS；本次只用实际Freqtrade2026.9作逻辑测试。
+先读STRATEGY.md与RESEARCH.md；本插件是研究代理。实际idea id必须在目标登记簿生成；没有已注册的默认id，不覆盖research/ideas.jsonl。原框架支持Linux/macOS；本次只用实际Freqtrade2026.10作逻辑测试。
 
 ## 1. 安装与专用测试
 

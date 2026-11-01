@@ -1,10 +1,14 @@
+# v2 测试与安装（2026-11-01）
+
+必须使用新版双向框架（manifest.json 的 commit 与基类校验和），Freqtrade 2026.10、Python >=3.12。旧3fe6153框架不能执行此版。先安装/检出框架升级，再复制插件；安装器不替换框架基类、不启用交易。空头与新增币种尚未市场验证。配置细节见仓库 docs/CONFIGURATION.md，独立ZIP使用 STRATEGY.md 顶部 v2 规则。
+
 # Carmine Rosato 包：安装和测试
 
 本包是可运行的研究代理；先读 STRATEGY.md 和 RESEARCH.md 的资料边界。不是完整原版复现，不宣称盈利。想法 key：`carmine_rosato`，目标登记簿的实际 id 尚未生成。
 
 ## 独立安装
 
-在策略包仓库根目录、已安装真实 Freqtrade 2026.9 的环境运行：
+在策略包仓库根目录、已安装真实 Freqtrade 2026.10 的环境运行：
 
 ```bash
 python tools/packs.py install --pack carmine_rosato --framework /path/to/freq-trader-framework
@@ -26,7 +30,7 @@ export PYTHONIOENCODING=utf-8
 s03ft doctor --research --json
 ```
 
-环境选择不会改原 config 的 strategy、dry_run、pair_whitelist 或风险参数。不运行 freqtrade trade，不调用真实下单接口。插件只给 BTC/USDT:USDT、ETH/USDT:USDT 发信号；配置的其他币仍可能需要日线数据用于父类订阅。
+环境选择不会改原 config 的 strategy、dry_run、pair_whitelist 或风险参数。不运行 freqtrade trade，不调用真实下单接口。插件按配置白名单及 both/long/short 产生信号；配置的其他币仍可能需要日线数据用于父类订阅。
 
 ## 在看收益前登记
 

@@ -10,12 +10,13 @@ import pandas as pd
 from pandas import DataFrame
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from framework_base import FrameworkStrategy  # noqa: E402
+from framework_base import FrameworkStrategy, target_reached  # noqa: E402
 
 
 class AndreaCimitanORB(FrameworkStrategy):
     timeframe = "5m"
     startup_candle_count = 300
+    can_short = True
     framework_params = {}
     volume_multiple = 1.2
     stop_buffer = 0.001
@@ -47,9 +48,10 @@ class AndreaCimitanORB(FrameworkStrategy):
 
     def populate_entry_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         df = dataframe.copy()
+        df["enter_short"] = 0
         df["enter_long"], df["enter_tag"] = 0, ""
         df["fw_stop"], df["fw_entry_cap"] = np.nan, np.nan
-        if metadata.get("pair") not in {"BTC/USDT:USDT", "ETH/USDT:USDT"}:
+        if not self.pair_enabled(metadata.get("pair")):
             return df
         cross = (df.close > df.orb_high) & (df.close.shift(1) <= df.orb_high)
         candidate = (df.orb_complete & df.orb_window & cross & (df.close > df.open)
@@ -58,17 +60,22 @@ class AndreaCimitanORB(FrameworkStrategy):
         df.loc[first, ["enter_long", "enter_tag"]] = [1, "andrea_orb_proxy_v1"]
         df.loc[first, "fw_stop"] = df.loc[first, "orb_low"] * (1 - self.stop_buffer)
         df.loc[first, "fw_entry_cap"] = df.loc[first, "close"] * (1 + self.cap_buffer)
-        return df
+        breakdown = (df.close < df.orb_low) & (df.close.shift(1) >= df.orb_low)
+        short_candidate = (df.orb_complete & df.orb_window & breakdown & (df.close < df.open)
+                           & (df.prior_volume > 0) & (df.volume >= self.volume_multiple * df.prior_volume))
+        first_short = short_candidate & short_candidate.groupby(df.ny_session).cumsum().eq(1)
+        df.loc[first_short, ["enter_short", "enter_tag"]] = [1, "andrea_short_proxy_v2"]
+        df.loc[first_short, "fw_stop"] = df.loc[first_short, "orb_high"] * (1 + self.stop_buffer)
+        df.loc[first_short, "fw_entry_cap"] = df.loc[first_short, "close"] * (1 - self.cap_buffer)
+        return self.filter_entry_signals(df, metadata)
 
     def populate_exit_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
-        dataframe["exit_long"] = 0
+        dataframe["exit_long"], dataframe["exit_short"] = 0, 0
         return dataframe
 
     def strategy_exit(self, pair, trade, current_time, current_rate, last_row):
-        stop = trade.get_custom_data("stop_px")
-        if stop is not None and math.isfinite(float(stop)) and trade.open_rate > float(stop):
-            if current_rate >= trade.open_rate + self.target_r * (trade.open_rate - float(stop)):
-                return "andrea_orb_2R"
+        if target_reached(trade, current_rate, self.target_r):
+            return "andrea_orb_2R"
         now = pd.Timestamp(current_time).tz_convert("America/New_York")
         opened = pd.Timestamp(trade.open_date_utc).tz_convert("America/New_York")
         if now.date() > opened.date() or now.hour >= 16:

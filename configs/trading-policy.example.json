@@ -1,0 +1,14 @@
+{
+  "exchange": {
+    "pair_whitelist": [
+      "BTC/USDT:USDT",
+      "ETH/USDT:USDT",
+      "SOL/USDT:USDT",
+      "BNB/USDT:USDT",
+      "HYPE/USDT:USDT"
+    ],
+    "pair_blacklist": []
+  },
+  "fw_trade_direction": "both",
+  "fw_pair_directions": {}
+}

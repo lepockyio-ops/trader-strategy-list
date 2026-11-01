@@ -1,12 +1,15 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
   "date": "2026-11-01",
   "framework": {
     "repository": "https://github.com/lepockyio-ops/freq-trader-framework",
-    "commit": "3fe6153ccec5eb0598ce3dbf2e38ea0bc79ce90c",
-    "freqtrade": "2026.9",
-    "base_sha256": "4741e52f0e5a82ab51cd2252e35d3f36572f0259f599628bab3b1c6270ec46a7",
-    "base_hash_mode": "CRLF normalized to LF"
+    "commit": "e79e10fe4cf05b6546725ea3e5709852cffe24b0",
+    "freqtrade": "2026.10",
+    "base_sha256": "5107782f899311cacafbd76595fc7fde2008ae6a2b21c2cc40f9886f64dba30b",
+    "base_hash_mode": "CRLF normalized to LF",
+    "previous_commit": "3fe6153ccec5eb0598ce3dbf2e38ea0bc79ce90c",
+    "python": ">=3.12",
+    "upstream_commit": "5828edbc768d35bc2d74cc9a0521c4bd452b9c34"
   },
   "packs": [
     {
@@ -19,10 +22,19 @@
       "informative_timeframes": [],
       "allowed_pairs": [
         "BTC/USDT:USDT",
-        "ETH/USDT:USDT"
+        "ETH/USDT:USDT",
+        "SOL/USDT:USDT",
+        "BNB/USDT:USDT",
+        "HYPE/USDT:USDT"
       ],
       "status": "research_proxy_not_market_validated",
-      "registration": "Generate a new real idea id in the target framework before backtesting."
+      "registration": "Generate a new real idea id in the target framework before backtesting.",
+      "pair_policy": "exchange.pair_whitelist (exact configured USDT perpetual names; editable)",
+      "directions": [
+        "long",
+        "short"
+      ],
+      "direction_policy": "fw_trade_direction: both (default), long, short"
     },
     {
       "slug": "brian_shannon",
@@ -36,10 +48,19 @@
       ],
       "allowed_pairs": [
         "BTC/USDT:USDT",
-        "ETH/USDT:USDT"
+        "ETH/USDT:USDT",
+        "SOL/USDT:USDT",
+        "BNB/USDT:USDT",
+        "HYPE/USDT:USDT"
       ],
       "status": "research_proxy_not_market_validated",
-      "registration": "Generate a new real idea id in the target framework before backtesting."
+      "registration": "Generate a new real idea id in the target framework before backtesting.",
+      "pair_policy": "exchange.pair_whitelist (exact configured USDT perpetual names; editable)",
+      "directions": [
+        "long",
+        "short"
+      ],
+      "direction_policy": "fw_trade_direction: both (default), long, short"
     },
     {
       "slug": "carmine_rosato",
@@ -51,10 +72,19 @@
       "informative_timeframes": [],
       "allowed_pairs": [
         "BTC/USDT:USDT",
-        "ETH/USDT:USDT"
+        "ETH/USDT:USDT",
+        "SOL/USDT:USDT",
+        "BNB/USDT:USDT",
+        "HYPE/USDT:USDT"
       ],
       "status": "research_proxy_not_market_validated",
-      "registration": "Generate a new real idea id in the target framework before backtesting."
+      "registration": "Generate a new real idea id in the target framework before backtesting.",
+      "pair_policy": "exchange.pair_whitelist (exact configured USDT perpetual names; editable)",
+      "directions": [
+        "long",
+        "short"
+      ],
+      "direction_policy": "fw_trade_direction: both (default), long, short"
     },
     {
       "slug": "chris_creamer",
@@ -66,10 +96,19 @@
       "informative_timeframes": [],
       "allowed_pairs": [
         "BTC/USDT:USDT",
-        "ETH/USDT:USDT"
+        "ETH/USDT:USDT",
+        "SOL/USDT:USDT",
+        "BNB/USDT:USDT",
+        "HYPE/USDT:USDT"
       ],
       "status": "research_proxy_not_market_validated",
-      "registration": "Generate a new real idea id in the target framework before backtesting."
+      "registration": "Generate a new real idea id in the target framework before backtesting.",
+      "pair_policy": "exchange.pair_whitelist (exact configured USDT perpetual names; editable)",
+      "directions": [
+        "long",
+        "short"
+      ],
+      "direction_policy": "fw_trade_direction: both (default), long, short"
     },
     {
       "slug": "imre_gams",
@@ -81,10 +120,19 @@
       "informative_timeframes": [],
       "allowed_pairs": [
         "BTC/USDT:USDT",
-        "ETH/USDT:USDT"
+        "ETH/USDT:USDT",
+        "SOL/USDT:USDT",
+        "BNB/USDT:USDT",
+        "HYPE/USDT:USDT"
       ],
       "status": "research_proxy_not_market_validated",
-      "registration": "Generate a new real idea id in the target framework before backtesting."
+      "registration": "Generate a new real idea id in the target framework before backtesting.",
+      "pair_policy": "exchange.pair_whitelist (exact configured USDT perpetual names; editable)",
+      "directions": [
+        "long",
+        "short"
+      ],
+      "direction_policy": "fw_trade_direction: both (default), long, short"
     },
     {
       "slug": "mark_minervini",
@@ -98,10 +146,19 @@
       ],
       "allowed_pairs": [
         "BTC/USDT:USDT",
-        "ETH/USDT:USDT"
+        "ETH/USDT:USDT",
+        "SOL/USDT:USDT",
+        "BNB/USDT:USDT",
+        "HYPE/USDT:USDT"
       ],
       "status": "research_proxy_not_market_validated",
-      "registration": "Generate a new real idea id in the target framework before backtesting."
+      "registration": "Generate a new real idea id in the target framework before backtesting.",
+      "pair_policy": "exchange.pair_whitelist (exact configured USDT perpetual names; editable)",
+      "directions": [
+        "long",
+        "short"
+      ],
+      "direction_policy": "fw_trade_direction: both (default), long, short"
     },
     {
       "slug": "martin_luk",
@@ -115,10 +172,19 @@
       ],
       "allowed_pairs": [
         "BTC/USDT:USDT",
-        "ETH/USDT:USDT"
+        "ETH/USDT:USDT",
+        "SOL/USDT:USDT",
+        "BNB/USDT:USDT",
+        "HYPE/USDT:USDT"
       ],
       "status": "research_proxy_not_market_validated",
-      "registration": "Generate a new real idea id in the target framework before backtesting."
+      "registration": "Generate a new real idea id in the target framework before backtesting.",
+      "pair_policy": "exchange.pair_whitelist (exact configured USDT perpetual names; editable)",
+      "directions": [
+        "long",
+        "short"
+      ],
+      "direction_policy": "fw_trade_direction: both (default), long, short"
     },
     {
       "slug": "peter_brandt",
@@ -130,10 +196,19 @@
       "informative_timeframes": [],
       "allowed_pairs": [
         "BTC/USDT:USDT",
-        "ETH/USDT:USDT"
+        "ETH/USDT:USDT",
+        "SOL/USDT:USDT",
+        "BNB/USDT:USDT",
+        "HYPE/USDT:USDT"
       ],
       "status": "research_proxy_not_market_validated",
-      "registration": "Generate a new real idea id in the target framework before backtesting."
+      "registration": "Generate a new real idea id in the target framework before backtesting.",
+      "pair_policy": "exchange.pair_whitelist (exact configured USDT perpetual names; editable)",
+      "directions": [
+        "long",
+        "short"
+      ],
+      "direction_policy": "fw_trade_direction: both (default), long, short"
     },
     {
       "slug": "pradeep_bonde",
@@ -147,10 +222,19 @@
       ],
       "allowed_pairs": [
         "BTC/USDT:USDT",
-        "ETH/USDT:USDT"
+        "ETH/USDT:USDT",
+        "SOL/USDT:USDT",
+        "BNB/USDT:USDT",
+        "HYPE/USDT:USDT"
       ],
       "status": "research_proxy_not_market_validated",
-      "registration": "Generate a new real idea id in the target framework before backtesting."
+      "registration": "Generate a new real idea id in the target framework before backtesting.",
+      "pair_policy": "exchange.pair_whitelist (exact configured USDT perpetual names; editable)",
+      "directions": [
+        "long",
+        "short"
+      ],
+      "direction_policy": "fw_trade_direction: both (default), long, short"
     },
     {
       "slug": "trader_mayne",
@@ -164,10 +248,19 @@
       ],
       "allowed_pairs": [
         "BTC/USDT:USDT",
-        "ETH/USDT:USDT"
+        "ETH/USDT:USDT",
+        "SOL/USDT:USDT",
+        "BNB/USDT:USDT",
+        "HYPE/USDT:USDT"
       ],
       "status": "research_proxy_not_market_validated",
-      "registration": "Generate a new real idea id in the target framework before backtesting."
+      "registration": "Generate a new real idea id in the target framework before backtesting.",
+      "pair_policy": "exchange.pair_whitelist (exact configured USDT perpetual names; editable)",
+      "directions": [
+        "long",
+        "short"
+      ],
+      "direction_policy": "fw_trade_direction: both (default), long, short"
     },
     {
       "slug": "vibha_jha",
@@ -179,10 +272,20 @@
       "informative_timeframes": [],
       "allowed_pairs": [
         "BTC/USDT:USDT",
-        "ETH/USDT:USDT"
+        "ETH/USDT:USDT",
+        "SOL/USDT:USDT",
+        "BNB/USDT:USDT",
+        "HYPE/USDT:USDT"
       ],
       "status": "research_proxy_not_market_validated",
-      "registration": "Generate a new real idea id in the target framework before backtesting."
+      "registration": "Generate a new real idea id in the target framework before backtesting.",
+      "pair_policy": "exchange.pair_whitelist (exact configured USDT perpetual names; editable)",
+      "directions": [
+        "long",
+        "short"
+      ],
+      "direction_policy": "fw_trade_direction: both (default), long, short"
     }
-  ]
+  ],
+  "archive_version": "v2"
 }

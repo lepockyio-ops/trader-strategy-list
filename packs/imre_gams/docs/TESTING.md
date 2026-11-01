@@ -1,3 +1,7 @@
+# v2 测试与安装（2026-11-01）
+
+必须使用新版双向框架（manifest.json 的 commit 与基类校验和），Freqtrade 2026.10、Python >=3.12。旧3fe6153框架不能执行此版。先安装/检出框架升级，再复制插件；安装器不替换框架基类、不启用交易。空头与新增币种尚未市场验证。配置细节见仓库 docs/CONFIGURATION.md，独立ZIP使用 STRATEGY.md 顶部 v2 规则。
+
 # ImreGamsAuctionProxy 安装与测试
 
 先读 [规格与裁剪范围](STRATEGY.md)。本包只能检验 OHLCV 平衡／回归代理；没有 L2、真实订单方向、期权链或组合风险引擎。
@@ -10,7 +14,7 @@ export FT_FRAMEWORK_ROOT=<framework>
 python -m pytest packs/imre_gams/tests -q
 ```
 
-或者只复制 `user_data/strategies/ImreGamsAuctionProxy.py` 到现有 FrameworkStrategy 所在目录。不要覆盖配置、风险基类或登记簿。使用 Freqtrade 2026.9，目标是研究副本。
+或者只复制 `user_data/strategies/ImreGamsAuctionProxy.py` 到现有 FrameworkStrategy 所在目录。不要覆盖配置、风险基类或登记簿。使用 Freqtrade 2026.10，目标是研究副本。
 
 进入目标框架之后：
 
