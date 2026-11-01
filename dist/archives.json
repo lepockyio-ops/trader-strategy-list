@@ -1,0 +1,68 @@
+[
+  {
+    "pack": "andrea_cimitan",
+    "file": "andrea_cimitan-v1.zip",
+    "sha256": "f1f33c5ac2d9eda279c2ab8fb24618c276b9b3bca535c53455ab576da9cca08b",
+    "bytes": 24289
+  },
+  {
+    "pack": "brian_shannon",
+    "file": "brian_shannon-v1.zip",
+    "sha256": "14c09680042b9816177787208ea5fe0ab812e8a61703fd28fccef6922441a9a6",
+    "bytes": 20820
+  },
+  {
+    "pack": "carmine_rosato",
+    "file": "carmine_rosato-v1.zip",
+    "sha256": "6a67697531138bca2cb75cd42ef95a34cbf311c7d3ffcaf87b2a00979527f1f2",
+    "bytes": 21592
+  },
+  {
+    "pack": "chris_creamer",
+    "file": "chris_creamer-v1.zip",
+    "sha256": "ffcd28321bc31c4db4e242c43d55dfaa8c7f18b5352c756579456d90be779f36",
+    "bytes": 21533
+  },
+  {
+    "pack": "imre_gams",
+    "file": "imre_gams-v1.zip",
+    "sha256": "7d62f4c7bf9b3516abaa0335a2f9fb1072fc521ecd307433e819525438498533",
+    "bytes": 23253
+  },
+  {
+    "pack": "mark_minervini",
+    "file": "mark_minervini-v1.zip",
+    "sha256": "3ae11bad1dd0bb49310a30d12cc0aa2ed1e3c4c5ad7d0457b15fffbd4b7cc205",
+    "bytes": 22568
+  },
+  {
+    "pack": "martin_luk",
+    "file": "martin_luk-v1.zip",
+    "sha256": "c33aac7ac35d7e3d963bff7edae622c065eeb446d121b554dbad551c3f5219c1",
+    "bytes": 25641
+  },
+  {
+    "pack": "peter_brandt",
+    "file": "peter_brandt-v1.zip",
+    "sha256": "27440b34215a728fcda15cc888d0101a1cd149a899a32701f76e23c2826d37dc",
+    "bytes": 21189
+  },
+  {
+    "pack": "pradeep_bonde",
+    "file": "pradeep_bonde-v1.zip",
+    "sha256": "908e12d51803cdba1190da58b6d5db0e53c782d67c32a1e74f3cbcaf4a3adfcd",
+    "bytes": 30904
+  },
+  {
+    "pack": "trader_mayne",
+    "file": "trader_mayne-v1.zip",
+    "sha256": "a446fdaa367fbfee2ed7e2485c2c3b78cc5c9d73a3a875a890b19f6e196ae4b2",
+    "bytes": 30556
+  },
+  {
+    "pack": "vibha_jha",
+    "file": "vibha_jha-v1.zip",
+    "sha256": "4dd9558c123324838f726dd602c2eab8ca99c56a316981ce6d99c6ebe5116e36",
+    "bytes": 20464
+  }
+]

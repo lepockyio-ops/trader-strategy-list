@@ -1,0 +1,9 @@
+[project]
+name = "trader-strategy-packs"
+version = "0.1.0"
+description = "Evidence-labelled research plugins for freq-trader-framework"
+requires-python = ">=3.11"
+dependencies = ["freqtrade==2026.9", "pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["packs", "tests"]

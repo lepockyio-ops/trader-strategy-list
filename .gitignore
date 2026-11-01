@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.hypothesis/
+.venv/
+var/
+*.env
+*.sqlite*
+user_data/data/
+research/results/
+research/lab/

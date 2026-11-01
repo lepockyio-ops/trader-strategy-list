@@ -1,0 +1,188 @@
+{
+  "version": "1.0.0",
+  "date": "2026-11-01",
+  "framework": {
+    "repository": "https://github.com/lepockyio-ops/freq-trader-framework",
+    "commit": "3fe6153ccec5eb0598ce3dbf2e38ea0bc79ce90c",
+    "freqtrade": "2026.9",
+    "base_sha256": "4741e52f0e5a82ab51cd2252e35d3f36572f0259f599628bab3b1c6270ec46a7",
+    "base_hash_mode": "CRLF normalized to LF"
+  },
+  "packs": [
+    {
+      "slug": "andrea_cimitan",
+      "trader": "Andrea Cimitan",
+      "class_name": "AndreaCimitanORB",
+      "strategy_file": "user_data/strategies/AndreaCimitanORB.py",
+      "test_file": "tests/test_andrea_cimitan.py",
+      "timeframe": "5m",
+      "informative_timeframes": [],
+      "allowed_pairs": [
+        "BTC/USDT:USDT",
+        "ETH/USDT:USDT"
+      ],
+      "status": "research_proxy_not_market_validated",
+      "registration": "Generate a new real idea id in the target framework before backtesting."
+    },
+    {
+      "slug": "brian_shannon",
+      "trader": "Brian Shannon",
+      "class_name": "BrianShannonAVWAP",
+      "strategy_file": "user_data/strategies/BrianShannonAVWAP.py",
+      "test_file": "tests/test_brian_shannon.py",
+      "timeframe": "1h",
+      "informative_timeframes": [
+        "1d"
+      ],
+      "allowed_pairs": [
+        "BTC/USDT:USDT",
+        "ETH/USDT:USDT"
+      ],
+      "status": "research_proxy_not_market_validated",
+      "registration": "Generate a new real idea id in the target framework before backtesting."
+    },
+    {
+      "slug": "carmine_rosato",
+      "trader": "Carmine Rosato",
+      "class_name": "CarmineRosatoReclaimProxy",
+      "strategy_file": "user_data/strategies/CarmineRosatoReclaimProxy.py",
+      "test_file": "tests/test_carmine_rosato.py",
+      "timeframe": "15m",
+      "informative_timeframes": [],
+      "allowed_pairs": [
+        "BTC/USDT:USDT",
+        "ETH/USDT:USDT"
+      ],
+      "status": "research_proxy_not_market_validated",
+      "registration": "Generate a new real idea id in the target framework before backtesting."
+    },
+    {
+      "slug": "chris_creamer",
+      "trader": "Chris Creamer",
+      "class_name": "ChrisCreamerFailedAuctionProxy",
+      "strategy_file": "user_data/strategies/ChrisCreamerFailedAuctionProxy.py",
+      "test_file": "tests/test_chris_creamer.py",
+      "timeframe": "5m",
+      "informative_timeframes": [],
+      "allowed_pairs": [
+        "BTC/USDT:USDT",
+        "ETH/USDT:USDT"
+      ],
+      "status": "research_proxy_not_market_validated",
+      "registration": "Generate a new real idea id in the target framework before backtesting."
+    },
+    {
+      "slug": "imre_gams",
+      "trader": "Imre Gams",
+      "class_name": "ImreGamsAuctionProxy",
+      "strategy_file": "user_data/strategies/ImreGamsAuctionProxy.py",
+      "test_file": "tests/test_imre_gams.py",
+      "timeframe": "1h",
+      "informative_timeframes": [],
+      "allowed_pairs": [
+        "BTC/USDT:USDT",
+        "ETH/USDT:USDT"
+      ],
+      "status": "research_proxy_not_market_validated",
+      "registration": "Generate a new real idea id in the target framework before backtesting."
+    },
+    {
+      "slug": "mark_minervini",
+      "trader": "Mark Minervini",
+      "class_name": "MarkMinerviniVCP",
+      "strategy_file": "user_data/strategies/MarkMinerviniVCP.py",
+      "test_file": "tests/test_mark_minervini.py",
+      "timeframe": "4h",
+      "informative_timeframes": [
+        "1d"
+      ],
+      "allowed_pairs": [
+        "BTC/USDT:USDT",
+        "ETH/USDT:USDT"
+      ],
+      "status": "research_proxy_not_market_validated",
+      "registration": "Generate a new real idea id in the target framework before backtesting."
+    },
+    {
+      "slug": "martin_luk",
+      "trader": "Martin Luk",
+      "class_name": "MartinLukPullback",
+      "strategy_file": "user_data/strategies/MartinLukPullback.py",
+      "test_file": "tests/test_martin_luk.py",
+      "timeframe": "1h",
+      "informative_timeframes": [
+        "1d"
+      ],
+      "allowed_pairs": [
+        "BTC/USDT:USDT",
+        "ETH/USDT:USDT"
+      ],
+      "status": "research_proxy_not_market_validated",
+      "registration": "Generate a new real idea id in the target framework before backtesting."
+    },
+    {
+      "slug": "peter_brandt",
+      "trader": "Peter Brandt",
+      "class_name": "PeterBrandtRectangle",
+      "strategy_file": "user_data/strategies/PeterBrandtRectangle.py",
+      "test_file": "tests/test_peter_brandt.py",
+      "timeframe": "1d",
+      "informative_timeframes": [],
+      "allowed_pairs": [
+        "BTC/USDT:USDT",
+        "ETH/USDT:USDT"
+      ],
+      "status": "research_proxy_not_market_validated",
+      "registration": "Generate a new real idea id in the target framework before backtesting."
+    },
+    {
+      "slug": "pradeep_bonde",
+      "trader": "Pradeep Bonde",
+      "class_name": "PradeepBondeBurst",
+      "strategy_file": "user_data/strategies/PradeepBondeBurst.py",
+      "test_file": "tests/test_pradeep_bonde.py",
+      "timeframe": "1h",
+      "informative_timeframes": [
+        "1d"
+      ],
+      "allowed_pairs": [
+        "BTC/USDT:USDT",
+        "ETH/USDT:USDT"
+      ],
+      "status": "research_proxy_not_market_validated",
+      "registration": "Generate a new real idea id in the target framework before backtesting."
+    },
+    {
+      "slug": "trader_mayne",
+      "trader": "Trader Mayne",
+      "class_name": "TraderMayneWeeklyHL",
+      "strategy_file": "user_data/strategies/TraderMayneWeeklyHL.py",
+      "test_file": "tests/test_trader_mayne.py",
+      "timeframe": "1h",
+      "informative_timeframes": [
+        "1d"
+      ],
+      "allowed_pairs": [
+        "BTC/USDT:USDT",
+        "ETH/USDT:USDT"
+      ],
+      "status": "research_proxy_not_market_validated",
+      "registration": "Generate a new real idea id in the target framework before backtesting."
+    },
+    {
+      "slug": "vibha_jha",
+      "trader": "Vibha Jha",
+      "class_name": "VibhaJhaTrend",
+      "strategy_file": "user_data/strategies/VibhaJhaTrend.py",
+      "test_file": "tests/test_vibha_jha.py",
+      "timeframe": "1d",
+      "informative_timeframes": [],
+      "allowed_pairs": [
+        "BTC/USDT:USDT",
+        "ETH/USDT:USDT"
+      ],
+      "status": "research_proxy_not_market_validated",
+      "registration": "Generate a new real idea id in the target framework before backtesting."
+    }
+  ]
+}
